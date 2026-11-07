@@ -1,15 +1,158 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Small Label Designer</title><style>
-:root{--ink:#0f172a;--muted:#64748b;--bg:#f1f5f9;--line:#cbd5e1}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif}.wrap{max-width:1160px;margin:auto;padding:28px 18px}.badge{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:#fff;border-radius:999px;padding:6px 11px;font-size:12px;font-weight:700}.ver{background:#ffffff26;border-radius:5px;padding:2px 5px}.head h1{margin:9px 0 3px;font-size:30px}.byline,.small{color:var(--muted);font-size:12px}.grid{display:grid;grid-template-columns:380px 1fr;gap:24px;margin-top:22px}.card{background:#fff;border-radius:18px;box-shadow:0 2px 10px #0f172a12;overflow:hidden}.body{padding:22px;display:grid;gap:18px}.field{display:grid;gap:8px}label{font-size:14px;font-weight:700}.input,textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:10px 12px;font:14px Arial,sans-serif}textarea{min-height:96px;resize:vertical}textarea::placeholder{color:#94a3b8;opacity:1}.row{display:flex;justify-content:space-between;align-items:center;gap:12px}.panel{background:#f8fafc;border-radius:15px;padding:14px;display:grid;gap:12px}.controls{display:flex;align-items:center;gap:10px}.range{width:100%;accent-color:var(--ink)}button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 13px;font:700 14px Arial;cursor:pointer}.primary{background:var(--ink);color:#fff}.icon{width:40px;height:40px;padding:0;font-size:19px}.switch{position:relative;width:44px;height:24px}.switch input{opacity:0}.slider{position:absolute;inset:0;background:#cbd5e1;border-radius:99px}.slider:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.15s}.switch input:checked+.slider{background:var(--ink)}.switch input:checked+.slider:before{transform:translateX(20px)}.switch input:disabled+.slider{opacity:.4}.notice{background:#fffbeb;color:#92400e;border-radius:11px;padding:11px;font-size:12px}.hidden{display:none!important}.preview{min-height:535px;padding:28px;background:#e2e8f080;display:flex;flex-direction:column}.stage{flex:1;display:flex;align-items:center;justify-content:center;border:1px dashed var(--line);border-radius:15px;background:#f8fafc}.shell{width:360px;height:120px;background:#fff;border:1px solid #cbd5e1;box-shadow:0 12px 28px #0f172a22;overflow:hidden}.scale{width:216px;height:72px;transform:scale(1.6666667);transform-origin:top left}.canvas{position:relative;width:216px;height:72px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff;font-family:Arial,sans-serif}.safe{position:absolute;inset:3mm;border:1px dashed #94a3b8;pointer-events:none;z-index:3}.textLabel{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;white-space:pre-wrap;overflow-wrap:anywhere;padding:3mm;line-height:1.05}.barcode{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:3mm}.bars{display:flex;align-items:stretch;justify-content:center;transform-origin:center}.human{font:13px/1 Arial,sans-serif;margin-top:3px;letter-spacing:.6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.foot{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end;margin-top:17px}.print-actions{display:flex;align-items:end;gap:8px}.print-qty{width:96px;display:grid;gap:4px}.print-qty label{font-size:12px}.print-qty input{height:40px;text-align:center;font-weight:700}.result{padding:10px;border-radius:10px;font-size:13px;font-weight:700}.pass{background:#ecfdf5;color:#047857}.fail{background:#fef2f2;color:#b91c1c}@media(max-width:850px){.grid{grid-template-columns:1fr}.shell{width:330px;height:110px}.scale{transform:scale(1.5277778)}}
-</style></head><body><div class="wrap"><header class="head"><span class="badge">SMALL LABEL DESIGNER <span class="ver">v1.3.3</span></span><h1>Small Label Designer</h1><div class="byline">Created by CHANHT</div></header><div class="grid"><section class="card"><div class="body"><div class="row" style="justify-content:flex-end"><button id="reset">Reset</button></div><div class="field"><label id="contentLabel">Label Content</label><textarea id="text" maxlength="80" placeholder="type something here ..."></textarea><div class="row small"><span id="hint">Multiple lines supported</span><span id="count">0/80</span></div></div><div class="panel"><div class="row"><label>Print font size</label><strong id="fontRead">20 px</strong></div><div id="fontControls" class="controls"><button id="fontMinus" class="icon">−</button><input id="fontSize" class="range" type="range" min="6" max="40" value="20"><button id="fontPlus" class="icon">+</button></div></div><div class="row"><label>Bold</label><label class="switch"><input id="bold" type="checkbox"><span class="slider"></span></label></div><div class="row"><label>Auto-center and fit</label><label class="switch"><input id="autoFit" type="checkbox" checked><span class="slider"></span></label></div><div class="row"><label>Convert to CODE128</label><label class="switch"><input id="codeMode" type="checkbox"><span class="slider"></span></label></div><div class="row"><label>IBP SN#</label><label class="switch"><input id="ibpMode" type="checkbox"><span class="slider"></span></label></div><div id="notice" class="notice hidden">Barcode modes are available only for single-line text.</div><div id="barControls" class="panel hidden"><div class="field"><div class="row"><label>Barcode text size</label><strong id="humanRead">13px</strong></div><input id="humanSize" class="range" type="range" min="8" max="28" value="13"></div><div class="field"><div class="row"><label>Barcode height</label><strong id="heightRead">28px</strong></div><input id="barHeight" class="range" type="range" min="18" max="44" value="28"></div><div class="field"><div class="row"><label>Barcode width</label><strong id="widthRead">100%</strong></div><input id="barWidth" class="range" type="range" min="60" max="140" step="5" value="100"></div></div><div id="scanBox" class="panel hidden"><label>Scan validation</label><div class="controls"><input id="scan" class="input" placeholder="Scan barcode here"><button id="validate">Validate</button></div><div id="result" class="result hidden"></div></div></div></section><section class="card"><div class="preview"><div class="stage"><div class="shell"><div class="scale"><div id="canvas" class="canvas"><div class="safe"></div><div id="textPreview" class="textLabel"></div><div id="barcodePreview" class="barcode hidden"><div id="bars" class="bars"></div><div id="human" class="human"></div></div></div></div></div></div><div class="foot"><div class="small">The dotted inset marks the 3 mm safe area. It does not print.</div><div class="print-actions"><div class="print-qty"><label for="qty">Print Quantity</label><input id="qty" class="input" type="number" min="1" max="999" value="1"></div><button id="print" class="primary">Print</button></div></div></div></section></div></div>
+:root{--ink:#0f172a;--muted:#64748b;--bg:#f1f5f9;--line:#cbd5e1}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif}.wrap{max-width:1160px;margin:auto;padding:28px 18px}.badge{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:#fff;border-radius:999px;padding:6px 11px;font-size:12px;font-weight:700}.ver{background:#ffffff26;border-radius:5px;padding:2px 5px}.head h1{margin:9px 0 3px;font-size:30px}.byline,.small{color:var(--muted);font-size:12px}.grid{display:grid;grid-template-columns:380px 1fr;gap:24px;margin-top:22px}.card{background:#fff;border-radius:18px;box-shadow:0 2px 10px #0f172a12;overflow:hidden}.body{padding:22px;display:grid;gap:18px}.field{display:grid;gap:8px}label{font-size:14px;font-weight:700}.input,textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:10px 12px;font:14px Arial,sans-serif}textarea{min-height:96px;resize:vertical}textarea::placeholder{color:#94a3b8;opacity:1}.row{display:flex;justify-content:space-between;align-items:center;gap:12px}.panel{background:#f8fafc;border-radius:15px;padding:14px;display:grid;gap:12px}.controls{display:flex;align-items:center;gap:10px}.range{width:100%;accent-color:var(--ink)}.range:disabled{opacity:.4}button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 13px;font:700 14px Arial;cursor:pointer;color:var(--ink)}button:disabled{opacity:.4;cursor:default}.primary{background:var(--ink);color:#fff}.icon{width:40px;height:40px;padding:0;font-size:19px}.switch{position:relative;width:44px;height:24px}.switch input{opacity:0}.slider{position:absolute;inset:0;background:#cbd5e1;border-radius:99px;cursor:pointer}.slider:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.15s}.switch input:checked+.slider{background:var(--ink)}.switch input:checked+.slider:before{transform:translateX(20px)}.switch input:focus-visible+.slider{outline:2px solid #3b82f6;outline-offset:2px}.switch input:disabled+.slider{opacity:.4;cursor:default}.notice{background:#fffbeb;color:#92400e;border-radius:11px;padding:11px;font-size:12px}.hidden{display:none!important}.preview{min-height:535px;padding:28px;background:#e2e8f080;display:flex;flex-direction:column}.stage{flex:1;display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center;border:1px dashed var(--line);border-radius:15px;background:#f8fafc;padding:12px}.shell{width:360px;height:120px;background:#fff;border:1px solid #cbd5e1;box-shadow:0 12px 28px #0f172a22;overflow:hidden;flex:none}.scale{width:216px;height:72px;transform:scale(1.6666667);transform-origin:top left}.warn{max-width:360px;background:#fffbeb;color:#92400e;border-radius:11px;padding:9px 11px;font-size:12px;text-align:center}.foot{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end;margin-top:17px}.print-actions{display:flex;align-items:end;gap:8px}.print-qty{width:96px;display:grid;gap:4px}.print-qty label{font-size:12px}.print-qty input{height:40px;text-align:center;font-weight:700}.result{padding:10px;border-radius:10px;font-size:13px;font-weight:700}.pass{background:#ecfdf5;color:#047857}.fail{background:#fef2f2;color:#b91c1c}@media(max-width:850px){.grid{grid-template-columns:1fr}.shell{width:330px;height:110px}.scale{transform:scale(1.5277778)}}@media(max-width:380px){.shell{width:288px;height:96px}.scale{transform:scale(1.3333333)}.foot{grid-template-columns:1fr}}
+</style><style id="labelCss">
+.canvas{position:relative;width:216px;height:72px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff;font-family:Arial,sans-serif;color:#000}.safe{position:absolute;inset:3mm;border:1px dashed #94a3b8;pointer-events:none;z-index:3}.textLabel{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:3mm;line-height:1.05}.txt{display:block;max-width:100%;white-space:pre-wrap;overflow-wrap:normal}.barcode{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:3mm}.bars{display:block;flex:none}.bars rect{fill:#000}.human{font:13px/1 Arial,sans-serif;margin-top:3px;letter-spacing:.6px;white-space:pre;overflow:hidden;text-overflow:ellipsis;max-width:100%;flex:none}.human:empty{display:none}.placeholder{color:#94a3b8;font-size:12px}.hidden{display:none!important}
+</style></head><body><div class="wrap"><header class="head"><span class="badge">SMALL LABEL DESIGNER <span class="ver">v1.3.4</span></span><h1>Small Label Designer</h1><div class="byline">Created by CHANHT</div></header><div class="grid"><section class="card"><div class="body"><div class="row" style="justify-content:flex-end"><button id="reset">Reset</button></div><div class="field"><label id="contentLabel" for="text">Label Content</label><textarea id="text" maxlength="80" placeholder="type something here ..."></textarea><div class="row small"><span id="hint">Multiple lines supported</span><span id="count">0/80</span></div></div><div id="fontPanel" class="panel"><div class="row"><label for="fontSize" id="fontLabel">Print font size</label><strong id="fontRead">20 px</strong></div><div id="fontControls" class="controls"><button id="fontMinus" class="icon" aria-label="Smaller font">−</button><input id="fontSize" class="range" type="range" min="6" max="40" value="20"><button id="fontPlus" class="icon" aria-label="Larger font">+</button></div></div><div class="row"><label for="bold">Bold</label><label class="switch"><input id="bold" type="checkbox"><span class="slider"></span></label></div><div class="row"><label for="autoFit">Auto-center and fit</label><label class="switch"><input id="autoFit" type="checkbox" checked><span class="slider"></span></label></div><div class="row"><label for="codeMode">Convert to CODE128</label><label class="switch"><input id="codeMode" type="checkbox"><span class="slider"></span></label></div><div class="row"><label for="ibpMode">IBP SN#</label><label class="switch"><input id="ibpMode" type="checkbox"><span class="slider"></span></label></div><div id="notice" class="notice hidden">Barcode modes are available only for single-line text.</div><div id="barControls" class="panel hidden"><div class="field"><div class="row"><label for="humanSize">Barcode text size</label><strong id="humanRead">13px</strong></div><input id="humanSize" class="range" type="range" min="8" max="28" value="13"><div id="humanHint" class="small hidden">Sized automatically while “Auto-center and fit” is on.</div></div><div class="field"><div class="row"><label for="barHeight">Barcode height</label><strong id="heightRead">28px</strong></div><input id="barHeight" class="range" type="range" min="18" max="44" value="28"></div><div class="field"><div class="row"><label for="barWidth">Barcode width</label><strong id="widthRead">100%</strong></div><input id="barWidth" class="range" type="range" min="60" max="140" step="5" value="100"></div></div><div id="scanBox" class="panel hidden"><label for="scan">Scan validation</label><div class="controls"><input id="scan" class="input" placeholder="Scan barcode here" autocomplete="off"><button id="validate">Validate</button></div><div id="result" class="result hidden"></div></div></div></section><section class="card"><div class="preview"><div class="stage"><div class="shell"><div class="scale"><div id="canvas" class="canvas"><div class="safe"></div><div id="textPreview" class="textLabel"><span id="textInner" class="txt"></span></div><div id="barcodePreview" class="barcode hidden"><svg id="bars" class="bars" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" preserveAspectRatio="none"></svg><div id="human" class="human"></div></div></div></div></div><div id="warn" class="warn hidden"></div></div><div class="foot"><div class="small">The dotted inset marks the 3 mm safe area. It does not print.</div><div class="print-actions"><div class="print-qty"><label for="qty">Print Quantity</label><input id="qty" class="input" type="number" min="1" max="999" value="1"></div><button id="print" class="primary">Print</button></div></div></div></section></div></div>
 <script>
-const $=id=>document.getElementById(id),E={text:$('text'),count:$('count'),hint:$('hint'),font:$('fontSize'),fontRead:$('fontRead'),fontControls:$('fontControls'),bold:$('bold'),fit:$('autoFit'),code:$('codeMode'),ibp:$('ibpMode'),notice:$('notice'),barControls:$('barControls'),scanBox:$('scanBox'),scan:$('scan'),result:$('result'),humanSize:$('humanSize'),humanRead:$('humanRead'),height:$('barHeight'),heightRead:$('heightRead'),width:$('barWidth'),widthRead:$('widthRead'),qty:$('qty'),textPreview:$('textPreview'),barcodePreview:$('barcodePreview'),bars:$('bars'),human:$('human'),canvas:$('canvas'),print:$('print'),contentLabel:$('contentLabel')};
+const $=id=>document.getElementById(id);
+const E={text:$('text'),count:$('count'),hint:$('hint'),font:$('fontSize'),fontRead:$('fontRead'),fontMinus:$('fontMinus'),fontPlus:$('fontPlus'),fontPanel:$('fontPanel'),bold:$('bold'),fit:$('autoFit'),code:$('codeMode'),ibp:$('ibpMode'),notice:$('notice'),barControls:$('barControls'),scanBox:$('scanBox'),scan:$('scan'),result:$('result'),humanSize:$('humanSize'),humanRead:$('humanRead'),humanHint:$('humanHint'),height:$('barHeight'),heightRead:$('heightRead'),width:$('barWidth'),widthRead:$('widthRead'),qty:$('qty'),textPreview:$('textPreview'),textInner:$('textInner'),barcodePreview:$('barcodePreview'),bars:$('bars'),human:$('human'),canvas:$('canvas'),print:$('print'),contentLabel:$('contentLabel'),warn:$('warn')};
+
+// Printable area inside the 3 mm safe inset of a 2.25in x 0.75in label (216 x 72 CSS px).
+const INSET=3*96/25.4, AREA_W=216-2*INSET, AREA_H=72-2*INSET, HUMAN_GAP=3;
+// Smallest bar (module) width, in CSS px, that still prints reliably on a 203 dpi printer (~2 dots, ~9.8 mil).
+const MIN_MODULE=0.94;
+
+// ---------- CODE128 (auto B/C) ----------
 const P=["212222","222122","222221","121223","121322","131222","122213","122312","132212","221213","221312","231212","112232","122132","122231","113222","123122","123221","223211","221132","221231","213212","223112","312131","311222","321122","321221","312212","322112","322211","212123","212321","232121","111323","131123","131321","112313","132113","132311","211313","231113","231311","112133","112331","132131","113123","113321","133121","313121","211331","231131","213113","213311","213131","311123","311321","331121","312113","312311","332111","314111","221411","431111","111224","111422","121124","121421","141122","141221","112214","112412","122114","122411","142112","142211","241211","221114","413111","241112","134111","111242","121142","121241","114212","124112","124211","411212","421112","421211","212141","214121","412121","111143","111341","131141","114113","114311","411113","411311","113141","114131","311141","411131","211412","211214","211232","2331112"];
-function encode(value){const safe=Array.from(value).filter(c=>{const n=c.charCodeAt(0);return n>=32&&n<=126}),codes=[104,...safe.map(c=>c.charCodeAt(0)-32)];let sum=104;for(let i=1;i<codes.length;i++)sum+=codes[i]*i;codes.push(sum%103,106);return codes.map(c=>P[c]).filter(p=>typeof p==='string')}
+const isDigit=c=>c>='0'&&c<='9';
+function codeValues(s){
+  // Uses Code Set C for runs of digits (two digits per symbol) so numeric data gives a much shorter, more scannable barcode.
+  const out=[],n=s.length;let i=0,set=null;
+  const run=i=>{let k=i;while(k<n&&isDigit(s[k]))k++;return k-i};
+  const toB=()=>{if(set!=='B'){out.push(set?100:104);set='B'}};
+  while(i<n){
+    const d=run(i);
+    const wantC=(d>=4&&(i===0||i+d===n||d>=6))||(i===0&&d===n&&d>=2&&d%2===0);
+    if(wantC){
+      let r=d;
+      if(r%2){toB();out.push(s.charCodeAt(i)-32);i++;r--}
+      if(set!=='C'){out.push(set?99:105);set='C'}
+      for(let k=0;k<r;k+=2){out.push(Number(s.substr(i,2)));i+=2}
+    }else{toB();out.push(s.charCodeAt(i)-32);i++}
+  }
+  if(!out.length)out.push(104);
+  let sum=out[0];for(let k=1;k<out.length;k++)sum+=out[k]*k;
+  out.push(sum%103,106);
+  return out;
+}
+function modules(s){return codeValues(s).map(v=>P[v]).join('').split('').map(Number)}
+
 function formatIbp(v){const c=Array.from(v).filter(x=>/[A-Za-z0-9]/.test(x)).join('').toUpperCase(),g=[];for(let i=0;i<c.length;i+=4)g.push(c.slice(i,i+4));return c?'SN:'+g.join('-'):''}
-function fit(t,m,b){if(!t.trim())return m;const L=t.split(String.fromCharCode(10)),n=Math.max(...L.map(x=>x.length),1),w=193.3228/Math.max(n*(b?.61:.56),1),h=49.3228/Math.max(L.length*1.12,1);return Math.max(6,Math.min(m,w,h))}
-function drawBars(){E.bars.innerHTML='';let natural=0;encode(E.text.value).forEach(p=>Array.from(p).forEach((d,i)=>{const w=Number(d);natural+=w;const s=document.createElement('span');s.style.width=w+'px';s.style.background=i%2?'#fff':'#000';E.bars.appendChild(s)}));const safeScale=Math.min(Number(E.width.value)/100,193.3228/Math.max(natural,1));E.bars.style.height=Math.max(8,Math.min(Number(E.height.value),34.3228))+'px';E.bars.style.transform=`scaleX(${safeScale})`;const bt=E.ibp.checked?formatIbp(E.text.value):E.text.value;E.human.textContent=bt;if(E.fit.checked){let s=28;E.human.style.fontSize=s+'px';const printableWidth=160;while((E.human.scrollWidth>printableWidth||E.human.scrollHeight>18)&&s>4){s--;E.human.style.fontSize=s+'px'}if(E.humanRead)E.humanRead.textContent=s+'px'}else{E.human.style.fontSize=(E.humanSize?E.humanSize.value:13)+'px';if(E.humanRead)E.humanRead.textContent=(E.humanSize?E.humanSize.value:13)+'px'}}
-function update(){const t=Array.from(E.text.value).filter(c=>{const n=c.charCodeAt(0);return n===10||(n>=32&&n<=126)}).join('');E.text.value=t;const multi=t.includes(String.fromCharCode(10));if(multi){E.code.checked=false;E.ibp.checked=false}E.code.disabled=multi;E.ibp.disabled=multi;E.notice.classList.toggle('hidden',!multi);const bc=E.code.checked||E.ibp.checked;E.barControls.classList.toggle('hidden',!bc);E.scanBox.classList.toggle('hidden',!bc);E.fontControls.style.opacity=bc?'.4':'1';E.contentLabel.textContent=bc?'Barcode data':'Label Content';E.hint.textContent=bc?'Single-line printable ASCII':'Multiple lines supported';E.count.textContent=t.length+'/80';E.fontRead.textContent=bc?'13 px':E.font.value+' px';E.textPreview.classList.toggle('hidden',bc);E.barcodePreview.classList.toggle('hidden',!bc);E.textPreview.textContent=t;E.textPreview.style.fontWeight=E.bold.checked?'700':'400';E.textPreview.style.fontSize=(E.fit.checked?fit(t,Number(E.font.value),E.bold.checked):Number(E.font.value))+'px';E.human.style.fontWeight=E.bold.checked?'700':'400';E.heightRead.textContent=E.height.value+'px';E.widthRead.textContent=E.width.value+'%';drawBars();E.qty.value=Math.max(1,Math.min(999,Number(E.qty.value)||1))}
-function validate(){let v=E.scan.value;while(v.length&&[10,13].includes(v.charCodeAt(v.length-1)))v=v.slice(0,-1);E.scan.value=v;E.result.classList.remove('hidden','pass','fail');if(v===E.text.value){E.result.classList.add('pass');E.result.textContent='Scan passed: exact match'}else{E.result.classList.add('fail');E.result.textContent='Scan failed: value does not match'}}
-function printNow(){const qty=Math.max(1,Math.min(999,Number(E.qty.value)||1));const pages=Array.from({length:qty},()=>`<div class="page">${E.canvas.outerHTML}</div>`).join("");const frame=document.createElement("iframe");frame.style.position="fixed";frame.style.width="0";frame.style.height="0";frame.style.border="0";frame.style.visibility="hidden";document.body.appendChild(frame);const d=frame.contentWindow.document;d.open();d.write(`<!doctype html><html><head><meta charset="utf-8"><style>@page{size:2.25in .75in;margin:0}*{box-sizing:border-box}html,body{width:2.25in;height:.75in;margin:0;padding:0;overflow:hidden;font-family:Arial,sans-serif}.page{width:2.25in;height:.75in;overflow:hidden;page-break-after:always}.page:last-child{page-break-after:auto}.canvas{width:216px;height:72px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff}.safe{display:none!important}.textLabel{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;white-space:pre-wrap;overflow-wrap:anywhere;padding:3mm;line-height:1.05}.barcode{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:3mm}.bars{display:flex;align-items:stretch;justify-content:center}.human{font:13px/1 Arial;margin-top:3px;letter-spacing:.6px;white-space:nowrap;overflow:hidden}.hidden{display:none!important}</style></head><body>${pages}</body></html>`);d.close();setTimeout(()=>{frame.contentWindow.focus();frame.contentWindow.print();setTimeout(()=>frame.remove(),1500);},250)}
-document.addEventListener('input',e=>{if(e.target===E.scan)E.result.classList.add('hidden');else update()});document.addEventListener('change',e=>{if(e.target===E.code&&E.code.checked)E.ibp.checked=false;if(e.target===E.ibp&&E.ibp.checked)E.code.checked=false;update()});$('fontMinus').onclick=()=>{E.font.value=Math.max(6,Number(E.font.value)-1);update()};$('fontPlus').onclick=()=>{E.font.value=Math.min(40,Number(E.font.value)+1);update()};$('validate').onclick=validate;E.scan.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();validate()}};E.print.onclick=printNow;$('reset').onclick=()=>{E.text.value='';E.font.value=20;E.bold.checked=false;E.fit.checked=true;E.code.checked=false;E.ibp.checked=false;E.qty.value=1;E.height.value=28;E.width.value=100;E.scan.value='';E.result.classList.add('hidden');update()};update();
+const cleanText=v=>Array.from(v).filter(c=>{const n=c.charCodeAt(0);return n===10||(n>=32&&n<=126)}).join('');
+
+// ---------- text label ----------
+function fitsText(){const t=E.textInner;return t.scrollWidth<=AREA_W+.5&&t.offsetWidth<=AREA_W+.5&&t.scrollHeight<=AREA_H+.5}
+function layoutText(t){
+  const el=E.textInner,max=Number(E.font.value);
+  el.textContent=t;el.style.fontWeight=E.bold.checked?'700':'400';
+  el.style.overflowWrap='normal';
+  if(!E.fit.checked||!t.trim()){el.style.whiteSpace='pre-wrap';el.style.fontSize=max+'px';return{size:max,clipped:t.trim()!==''&&!fitsText()}}
+  // Keep the lines exactly as typed if possible; otherwise wrap at spaces; as a last resort break inside words.
+  const modes=[['pre','normal'],['pre-wrap','normal'],['pre-wrap','anywhere']];
+  for(const [ws,ow] of modes){
+    el.style.whiteSpace=ws;el.style.overflowWrap=ow;
+    el.style.fontSize='6px';if(!fitsText())continue;
+    let lo=6,hi=max;el.style.fontSize=hi+'px';
+    if(fitsText())return{size:hi,clipped:false};
+    for(let k=0;k<14;k++){const mid=(lo+hi)/2;el.style.fontSize=mid+'px';if(fitsText())lo=mid;else hi=mid}
+    const size=Math.floor(lo*10)/10;el.style.fontSize=size+'px';return{size,clipped:false};
+  }
+  el.style.fontSize='6px';return{size:6,clipped:true};
+}
+
+// ---------- barcode label ----------
+function layoutBarcode(data){
+  const human=E.ibp.checked?formatIbp(data):data;
+  E.human.textContent=human;E.human.style.fontWeight=E.bold.checked?'700':'400';
+  let hs;
+  // Auto-fit: the chosen bar height wins; the text takes the remaining space (8–18px) and the width it needs.
+  if(E.fit.checked){hs=Math.floor(Math.max(8,Math.min(18,AREA_H-Number(E.height.value)-HUMAN_GAP)));E.human.style.fontSize=hs+'px';while(E.human.scrollWidth>AREA_W&&hs>6){hs--;E.human.style.fontSize=hs+'px'}}
+  else{hs=Number(E.humanSize.value);E.human.style.fontSize=hs+'px'}
+  E.humanRead.textContent=hs+'px';
+  const humanH=human?hs+HUMAN_GAP:0;
+  const mods=modules(data),natural=mods.reduce((a,b)=>a+b,0);
+  const scale=Math.min(Number(E.width.value)/100,AREA_W/natural);
+  const maxH=Math.max(8,AREA_H-humanH),h=Math.min(Number(E.height.value),maxH);
+  let x=0,rects='';mods.forEach((w,i)=>{if(i%2===0)rects+=`<rect x="${x}" y="0" width="${w}" height="1"/>`;x+=w});
+  E.bars.setAttribute('viewBox',`0 0 ${natural} 1`);E.bars.setAttribute('width',(natural*scale).toFixed(3));E.bars.setAttribute('height',h.toFixed(2));E.bars.innerHTML=rects;
+  E.heightRead.textContent=h<Number(E.height.value)?`${Math.round(h)}px (max)`:E.height.value+'px';
+  const mil=scale/96*1000;E.widthRead.textContent=`${E.width.value}% · ${mil.toFixed(1)} mil`;
+  return{scale,clipped:E.human.scrollWidth>E.human.clientWidth+.5};
+}
+
+function update(){
+  // Strip unsupported characters without throwing the caret to the end.
+  const raw=E.text.value,t=cleanText(raw);
+  if(t!==raw){const pos=E.text.selectionStart,removed=raw.length-t.length;E.text.value=t;const p=Math.max(0,pos-removed);E.text.setSelectionRange(p,p)}
+  const multi=t.includes('\n');
+  if(multi){E.code.checked=false;E.ibp.checked=false}
+  E.code.disabled=multi;E.ibp.disabled=multi;E.notice.classList.toggle('hidden',!multi);
+  const bc=E.code.checked||E.ibp.checked;
+  E.barControls.classList.toggle('hidden',!bc);E.scanBox.classList.toggle('hidden',!bc);
+  [E.font,E.fontMinus,E.fontPlus].forEach(x=>x.disabled=bc);E.fontPanel.style.opacity=bc?'.5':'1';
+  E.fontRead.textContent=bc?'n/a':E.font.value+' px';
+  E.humanSize.disabled=E.fit.checked;E.humanHint.classList.toggle('hidden',!E.fit.checked);
+  E.contentLabel.textContent=bc?'Barcode data':'Label Content';
+  E.hint.textContent=t!==raw?'Unsupported characters were removed':bc?'Single-line printable ASCII':'Multiple lines supported';
+  E.count.textContent=t.length+'/80';
+  E.textPreview.classList.toggle('hidden',bc);E.barcodePreview.classList.toggle('hidden',!bc);
+  const warnings=[];
+  if(bc){
+    const empty=!t.length||(E.ibp.checked&&!formatIbp(t));
+    E.bars.classList.toggle('hidden',empty);
+    if(empty){E.bars.innerHTML='';E.human.innerHTML='<span class="placeholder">Enter barcode data</span>';E.human.style.fontSize='12px'}
+    else{
+      const r=layoutBarcode(t);
+      if(r.scale<MIN_MODULE)warnings.push(`Barcode is very dense (${(r.scale/96*1000).toFixed(1)} mil bars) and may not scan reliably. Shorten the data, or use digits only.`);
+      if(r.clipped)warnings.push('Barcode text is cut off. Lower the barcode text size.');
+    }
+  }else{
+    const r=layoutText(t);
+    E.fontRead.textContent=E.fit.checked&&t.trim()?`${r.size} px (max ${E.font.value})`:E.font.value+' px';
+    if(r.clipped)warnings.push(E.fit.checked?'Text is too long to fit the label.':'Text is cut off at this size. Lower the font size or turn on auto-fit.');
+  }
+  E.warn.textContent=warnings.join(' ');E.warn.classList.toggle('hidden',!warnings.length);
+}
+
+function validate(){
+  let v=E.scan.value.replace(/[\r\n]+$/,'');E.scan.value=v;
+  E.result.classList.remove('hidden','pass','fail');
+  if(v&&v===E.text.value){E.result.classList.add('pass');E.result.textContent='Scan passed: exact match'}
+  else{E.result.classList.add('fail');E.result.textContent=v?'Scan failed: value does not match':'Nothing scanned yet'}
+}
+
+function clampQty(){const q=Math.max(1,Math.min(999,Math.floor(Number(E.qty.value))||1));E.qty.value=q;return q}
+
+function printNow(){
+  update();
+  const bc=E.code.checked||E.ibp.checked;
+  if(bc&&(!E.text.value||(E.ibp.checked&&!formatIbp(E.text.value)))){alert('Enter barcode data before printing.');E.text.focus();return}
+  if(!bc&&!E.text.value.trim()&&!confirm('The label is empty. Print blank labels anyway?'))return;
+  const qty=clampQty();
+  const label=E.canvas.cloneNode(true);label.removeAttribute('id');label.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));label.querySelector('.safe').remove();
+  const one=label.outerHTML,pages=Array.from({length:qty},()=>`<div class="page">${one}</div>`).join('');
+  const frame=document.createElement('iframe');
+  frame.setAttribute('aria-hidden','true');
+  Object.assign(frame.style,{position:'fixed',right:'0',bottom:'0',width:'2.25in',height:'.75in',border:'0',opacity:'0',pointerEvents:'none'});
+  document.body.appendChild(frame);
+  const d=frame.contentWindow.document;
+  d.open();
+  d.write(`<!doctype html><html><head><meta charset="utf-8"><title>Label</title><style>@page{size:2.25in .75in;margin:0}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}html,body{margin:0;padding:0;background:#fff}.page{width:2.25in;height:.75in;overflow:hidden;break-after:page;page-break-after:always}.page:last-child{break-after:auto;page-break-after:auto}${$('labelCss').textContent}</style></head><body>${pages}</body></html>`);
+  d.close();
+  let done=false;const cleanup=()=>{if(done)return;done=true;setTimeout(()=>frame.remove(),100)};
+  frame.contentWindow.addEventListener('afterprint',cleanup);
+  setTimeout(()=>{frame.contentWindow.focus();frame.contentWindow.print();setTimeout(cleanup,60000)},250);
+}
+
+document.addEventListener('input',e=>{if(e.target===E.scan)E.result.classList.add('hidden');else if(e.target!==E.qty)update()});
+document.addEventListener('change',e=>{if(e.target===E.qty){clampQty();return}if(e.target===E.code&&E.code.checked)E.ibp.checked=false;if(e.target===E.ibp&&E.ibp.checked)E.code.checked=false;update()});
+E.fontMinus.onclick=()=>{E.font.value=Math.max(6,Number(E.font.value)-1);update()};
+E.fontPlus.onclick=()=>{E.font.value=Math.min(40,Number(E.font.value)+1);update()};
+$('validate').onclick=validate;
+E.scan.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();validate()}};
+E.print.onclick=printNow;
+// Ctrl/Cmd+P prints the label instead of the whole page.
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&!e.altKey&&e.key.toLowerCase()==='p'){e.preventDefault();printNow()}});
+$('reset').onclick=()=>{E.text.value='';E.font.value=20;E.bold.checked=false;E.fit.checked=true;E.code.checked=false;E.ibp.checked=false;E.qty.value=1;E.humanSize.value=13;E.height.value=28;E.width.value=100;E.scan.value='';E.result.classList.add('hidden');update()};
+update();
 </script></body></html>
